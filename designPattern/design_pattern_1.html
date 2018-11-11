@@ -125,8 +125,8 @@
       constructor() { }
       async render(data) {
         if (!data instanceof Data) throw 'invalid data type';
-        this._info = await data.getData();
-        this._render();
+        const info = await data.getData();
+        this._render(info);
       }
       _render() {
         throw '_render must override';
@@ -139,11 +139,10 @@
         super();
         this._parent = parent;
       }
-      _render() {
+      _render({ title, header, items }) {
         const parent = document.querySelector(this._parent);
         if (!parent) throw 'invalid parent';
         parent.innerHTML = '';
-        const { title, header, items } = this._info;
         const [table, caption, thead] = 'table,caption,thead'.split(',').map(v => document.createElement(v));
         caption.innerHTML = title;
         [
@@ -159,12 +158,6 @@
     }
 
     const url = 'https://gist.githubusercontent.com/tmmoond8/dd912bc8fbd4ce301a8876d316768de8/raw/36ba7207ad09b2225a7ec447885637bbda1bdf19/TIOBE%25202017%2520June.json';
-    // const loader = new Loader(url);
-    // loader.load(json => {
-    //   const renderer = new Renderer();
-    //   renderer.setData(json);
-    //   renderer.render();
-    // });
 
     const data = new JsonData(url);
     const renderer = new TableRenderer('#data');
