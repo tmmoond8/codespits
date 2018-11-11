@@ -73,9 +73,103 @@
           parentEl.appendChild(table);
         }
       };
+    })(); //Table class
+
+    const Data = class {
+      async getData() {
+        const json = await this._getData();
+        return new Info(json);
+      };
+
+      async _getData() {
+        throw '_getData must override';
+      }
+    }
+
+    const JsonData = (_ => {
+      const Private = Symbol();
+      return class extends Data {
+        constructor(data) {
+          super();
+          this[Private] = { data };
+        }
+
+        async _getData() {
+          let json;
+          if (typeof this[Private].data === 'string') {
+            const response = await fetch(this[Private].data);
+            json = await response.json();
+          } else json = this[Private].data;
+          return new Info(json);
+        }
+      }
     })();
-    const table = new Table("#data");
-    table.load('https://gist.githubusercontent.com/tmmoond8/dd912bc8fbd4ce301a8876d316768de8/raw/36ba7207ad09b2225a7ec447885637bbda1bdf19/TIOBE%25202017%2520June.json');
+
+    const Info = (_ => {
+      const Private = Symbol();
+      return class {
+        constructor(json) {
+          const { title, header, items } = json;
+          if (typeof title !== 'string' || !title) throw 'invalid title';
+          if (!Array.isArray(header) || !header.length) throw 'invalid header';
+          if (!Array.isArray(items) || !items.length) throw 'invalid items';
+          this[Private] = { title, header, items };
+        }
+        get title() { return this[Private].title };
+        get header() { return this[Private].header };
+        get items() { return this[Private].items };
+      };
+    })();
+
+    const Renderer = class {
+      constructor() { }
+      async render(data) {
+        if (!data instanceof Data) throw 'invalid data type';
+        this._info = await data.getData();
+        this._render();
+      }
+      _render() {
+        throw '_render must override';
+      }
+    }
+
+    const TableRenderer = class extends Renderer {
+      constructor(parent) {
+        if (typeof parent !== 'string' || !parent) throw 'invalid param';
+        super();
+        this._parent = parent;
+      }
+      _render() {
+        const parent = document.querySelector(this._parent);
+        if (!parent) throw 'invalid parent';
+        parent.innerHTML = '';
+        const { title, header, items } = this._info;
+        const [table, caption, thead] = 'table,caption,thead'.split(',').map(v => document.createElement(v));
+        caption.innerHTML = title;
+        [
+          caption,
+          header.reduce((_, v) => (thead.appendChild(document.createElement('th')).innerHTML = v, thead)),
+          ...items.map(item => item.reduce(
+            (tr, v) => (tr.appendChild(document.createElement('td')).innerHTML = v, tr),
+            document.createElement('tr')
+          ))
+        ].forEach(el => table.appendChild(el));
+        parent.appendChild(table);
+      }
+    }
+
+    const url = 'https://gist.githubusercontent.com/tmmoond8/dd912bc8fbd4ce301a8876d316768de8/raw/36ba7207ad09b2225a7ec447885637bbda1bdf19/TIOBE%25202017%2520June.json';
+    // const loader = new Loader(url);
+    // loader.load(json => {
+    //   const renderer = new Renderer();
+    //   renderer.setData(json);
+    //   renderer.render();
+    // });
+
+    const data = new JsonData(url);
+    const renderer = new TableRenderer('#data');
+    renderer.render(data);
+
   </script>
 </body>
 
