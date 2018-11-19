@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>CodeSpitz css #1</title>
+</head>
+<style>
+  body,
+  body * {
+    font-size: 0;
+  }
+
+  .box {
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    border: 10px solid #000;
+    display: inline-block;
+  }
+
+  .border_dash {
+    margin: 20px;
+    border: 10px dashed #000;
+  }
+
+  @keyframes ani {
+    from {
+      box-shadow: 0 0 0 0 purple, 0 0 0 0 green, inset 0 0 0 0 purple, inset 0 0 0 0 green;
+      transform: rotate(0);
+    }
+
+    to {
+      box-shadow: 0 0 0 10px purple, 0 0 0 20px green, inset 0 0 0 10px purple, inset 0 0 0 20px green;
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<body style="width:500px">
+  <div class="box border_dash" style="background:blue; box-shadow: inset 0 0 0 10px yellow, 0 0 0 10px rgb(125, 0, 32), 0 0 0 20px yellow"></div>
+  <div class="box border_dash" style="border-radius: 50%; background:blue; box-shadow: inset 0 0 0 10px yellow, 0 0 0 20px yellow,  0 0 0 10px rgb(125, 0, 32)"></div>
+  <div style="height: 100px"></div>
+  <div class="box border_dash" style="border-radius: 50%; background:blue; animation: ani 0.4s infinite"></div>
+  <div class="box" style="
+    background: aquamarine;
+    border-radius: 15px;
+    outline: 10px solid aquamarine;
+    border: 1px dashed #fff;
+    color: #fff;
+    box-shadow: 0 0 0 10px aquamarine;
+  ">stitched</div>
+</body>
+
+</html>
