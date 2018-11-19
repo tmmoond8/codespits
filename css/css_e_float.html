@@ -1,0 +1,39 @@
+<head>
+  <style type="text/css">
+    .container {
+      padding: 10px;
+      border: 10px solid #ddd;
+      background: #fff;
+    }
+
+    .container:after {
+      content: "";
+      clear: both;
+      display: block;
+    }
+
+    .red-box {
+      width: 55%;
+      padding: 10px;
+      border: 10px solid #000;
+      background: #f00;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <p>container</p>
+    <div id="left" class="red-box" style="background:aqua; float:left">
+      <p><strong>left</strong></p>
+    </div>
+    <div class="red-box" style="float: right;">
+      <p><strong>#float-box {float:right;}</strong></p>
+    </div>
+  </div>
+  <div style="background:plum">
+    <p>footer</p>
+  </div>
+</body>
+
+</html>
