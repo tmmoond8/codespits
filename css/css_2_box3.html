@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>CodeSpitz css #1</title>
+</head>
+<style>
+  body,
+  body * {
+    margin: 0;
+    font-size: 0;
+  }
+
+  div * {
+    font-size: inherit;
+  }
+
+  .box {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+  }
+
+  .in {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    border: 1px solid black;
+    display: inline-block;
+  }
+
+  .abs {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    background: firebrick;
+    left: 25px;
+    top: 25px;
+  }
+</style>
+
+<body>
+  <div class="box" style="background:yellow; width: 200px; height: 200px; margin: 100px;">
+    <div style="width: 100px; height: 100px; position: absolute; background: red"></div>
+    <div style="width: 100px; height: 100px; position: absolute; background: blue;left:0;"></div>
+    <div style="width: 100px; height: 100px; position: absolute; background: greenyellow;left:0; top:0;"></div>
+  </div>
+  <div></div>
+  <div class="in"></div>
+  <div class="in"></div>
+  <div class="in">
+    <div class="abs"></div>
+  </div>
+  <div class="in">
+    <div class="abs"></div>
+  </div>
+  <div class="in"></div>
+  <div class="in"></div>
+  <div class="in"></div>
+  <div class="in"></div>
+  <div class="in">
+    <div class="abs"></div>
+  </div>
+  <div class="in"></div>
+  <div class="in"></div>
+  <div class="in"></div>
+</body>
+
+</html>

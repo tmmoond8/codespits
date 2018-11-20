@@ -11,6 +11,10 @@
     font-size: 0;
   }
 
+  div * {
+    font-size: inherit;
+  }
+
   .box {
     width: 100px;
     height: 100px;
@@ -50,6 +54,23 @@
     color: #fff;
     box-shadow: 0 0 0 10px aquamarine;
   ">stitched</div>
+  <div style="font-size:16px;">
+    <h1>OFFSET PARENT</h1>
+    <p>1. NULL</p>
+    <ul>
+      <li>ROOT, HTML, BODY</li>
+      <li>POSITION: FIXED</li>
+      <li>OUT OF DOM TREE</li>
+    </ul>
+    <p>2. RECURSIVE SEARCH</p>
+    <ul>
+      <li>PARENT.POSITION: FIXED = NULL</li>
+      <li>PARENT.POSITION: !STATIC = OK</li>
+      <li>BODY = OK</li>
+      <li>TD, TH, TABLE = OK</li>
+      <li>PARENT.PARENT CONTINUE</li>
+    </ul>
+  </div>
 </body>
 
 </html>
