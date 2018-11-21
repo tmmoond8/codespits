@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta title="code spitz design pattern #2">
+</head>
+
+<body>
+  <button onclick=" imageLoad()">IMAGE LOAD</button>
+  <button onclick=" mdLoad()">MD LOAD</button>
+  <div style="width: 500px; min-height: 400px;">
+    <img id="image" src="" style="width: 500px;" />
+  </div>
+  <div id="md"></div>
+
+  <script src="Github.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.js"></script>
+  <script>
+    const id = 'tmmoond8';
+    const repo = 'temtris';
+    const loader = new Github(id, repo);
+    const el = v => document.querySelector(v);
+    function imageLoad() {
+      const img = (v, el) => el.src = 'data:text/plain;base64,' + v;
+      loader.setParser(img, el('#image'));
+      loader.load('temtris-backend/src/static/baratheon.jpg');
+    }
+
+    function mdLoad() {
+      const md = v => el('#md').innerHTML = window.markdownit().render(decodeURIComponent(atob(v)));
+      loader.setParser(md, el('#md'));
+      loader.load('README.md');
+    }
+  </script>
+</body>
+
+</html>
