@@ -14,22 +14,20 @@
   <div id="md"></div>
 
   <script src="Github.js"></script>
-  <script src="ImageLoader.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.js"></script>
-  <script src="MdLoader.js"></script>
   <script>
     const id = 'tmmoond8';
     const repo = 'temtris';
     const el = v => document.querySelector(v);
+    const loader = new Github(id, repo);
     function imageLoad() {
-      const imgLoader = new Github(id, repo);
-      imgLoader.parser = v => el('#image').src = 'data:text/plain;base64,' + v;
-      imgLoader.load('temtris-backend/src/static/baratheon.jpg');
+      loader.parser = v => el('#image').src = 'data:text/plain;base64,' + v;
+      loader.load('temtris-backend/src/static/baratheon.jpg');
     }
 
     function mdLoad() {
-      const mdLoad = new MdLoader(id, repo, document.querySelector('#md'));
-      mdLoad.load('README.md');
+      loader.parser = v => el('#md').innerHTML = window.markdownit().render(decodeURIComponent(atob(v)));
+      loader.load('README.md');
     }
   </script>
 </body>
