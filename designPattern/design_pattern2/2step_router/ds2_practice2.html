@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta title="code spitz design pattern #2">
+</head>
+
+<body>
+  <button onclick=" imageLoad1()">IMAGE LOAD1</button>
+  <button onclick=" mdLoad1()">MD LOAD1</button>
+  <button onclick=" imageLoad2()">IMAGE LOAD2</button>
+  <button onclick=" mdLoad2()">MD LOAD2</button>
+  <div style="width: 500px; min-height: 400px;">
+    <img id="image1" src="" style="width: 500px;" />
+  </div>
+  <div id="md1"></div>
+  <div style="width: 500px; min-height: 400px;">
+    <img id="image2" src="" style="width: 500px;" />
+  </div>
+  <div id="md2"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.js"></script>
+  <script src="Repo.js"></script>
+  <script src="Github.js"></script>
+
+  <script>
+    const id = 'tmmoond8';
+    const repo = 'temtris';
+    const el = v => document.querySelector(v);
+    const loader = new Github(id, repo);
+    const img = (v, el) => el.src = 'data:text/plain;base64,' + v;
+    const md = (v, el) => el.innerHTML = window.markdownit().render(decodeURIComponent(atob(v)));
+    loader.addRepo('temtris', 'tmmoond8', 'temtris');
+    loader.addRouter('temtris', 'jpg,png,gif', img, el('#image1'));
+    loader.addRouter('temtris', 'md', md, el('#md1'));
+
+    loader.addRepo('bookk', 'tmmoond8', 'BookkBookk');
+    loader.addRouter('bookk', 'jpg,png,gif', img, el('#image2'));
+    loader.addRouter('bookk', 'md', md, el('#md2'));
+
+    function imageLoad1() {
+      loader.load('temtris', 'temtris-backend/src/static/baratheon.jpg');
+    }
+
+    function mdLoad1() {
+      loader.load('temtris', 'README.md');
+    }
+
+    function imageLoad2() {
+      loader.load('bookk', 'app/src/main/res/drawable/profile07.jpg');
+    }
+
+    function mdLoad2() {
+      loader.load('bookk', 'README.md');
+    }
+  </script>
+</body>
+
+</html>
