@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta title="sub item task">
+</head>
+
+<body>
+  <div id="root" />
+  <script src="reposite.js"></script>
+  <script src="DomRenderer.js"></script>
+  <script>
+    const folder = new Task('s3-4');
+    folder.add("2강교안작성");
+    folder.add("3강교안작성");
+    const { list } = folder.byTitle();
+    list[1].task.add('ppt정리');
+    list[1].task.add('코드정리');
+    const { list: sublist } = list[1].task.byTitle();
+    sublist[1].task.add('슬라이드마스터정리');
+    sublist[1].task.add('디자인개선');
+
+    const todo = new DomRenderer('#root');
+    todo.render(folder.byTitle());
+  </script>
+</body>
+
+</html>
