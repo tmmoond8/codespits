@@ -13,14 +13,22 @@ const DomRenderer = (_=> {
       const parent = document.querySelector(this[Private].parent);
       parent.innerHTML = '';
       parent.appendChild(el('h1', { innerHTML : task._title }));
-      parent.appendChild(this._render(el('ul'), list));
+      list.length > 0 && parent.appendChild(this._render(el('ul'), list));
     }
 
     _render(parent, list) {
       list.forEach(({task, list}) => {
         const li = parent.appendChild(el('li'));
-        li.appendChild(el('div', { innerHTML: task._title }));
-        li.appendChild(this._render(el('ul'), list));
+        li.appendChild(el('div', { 
+          innerHTML: task._title,
+          task: task,
+          onclick: function(e) {
+            const task = e.target.task;
+            task.toggle();
+            e.target.style.textDecorationLine = task.isComplete() ? 'line-through' : '';
+          }
+         }));
+        list.length > 0 && li.appendChild(this._render(el('ul'), list));
       });
       return parent;
     };

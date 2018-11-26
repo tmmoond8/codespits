@@ -8,7 +8,9 @@ const Task = (_ => {
     }
     
     isComplete() { return this._isComplete };
-    toggle() { this._isComplete = !this._isComplete; };
+    toggle() { 
+      this._isComplete = !this._isComplete; 
+    };
     add(title, date = null) { this._list.push(new Task(title, date)); }
     remove(task) {
       const list = this._list;
