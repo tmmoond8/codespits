@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>code spitz css#3</title>
+</head>
+<style id="s">
+  .test {
+    background: #ff0;
+  }
+</style>
+
+<body>
+  <div class="red red1">sd</div>
+  <div class="blue blue1">dsd</div>
+  <div class="red">sd</div>
+  <div class="blue">dsd</div>
+  <div class="red">sd</div>
+  <div class="blue">dsd</div>
+  <div class="red">sd</div>
+  <div class="blue">dsd</div>
+  <div class="red">sd</div>
+  <div class="blue">dsd</div>
+  <div class="red">sd</div>
+  <div class="blue">dsd</div>
+  <div class="red">sd</div>
+  <div class="blue">dsd</div>
+  <script>
+    const el = document.querySelector('#s');
+    const sheet = el.sheet;
+    const rules = sheet.cssRules;
+    const rule = rules[0];
+
+    document.querySelector('.red1').onclick = _ => {
+      sheet.insertRule('.red{background: red}', rules.length);
+      sheet.insertRule('.blue{background: blue}', rules.length);
+    }
+    document.querySelector('.blue1').onclick = _ => {
+      sheet.deleteRule(rules.length - 1);
+    }
+    console.log(sheet);
+  </script>
+</body>
+
+</html>
