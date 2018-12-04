@@ -1,4 +1,4 @@
-const TAB = '--';
+const TAB = '   ';
 const ConsoleRenderer = class {
   constructor() {}
 
