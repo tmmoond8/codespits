@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>design pattern #3 practice 1</title>
+</head>
+
+<body>
+  <div id="root" />
+  <script>
+    const Task = (_ => {
+      return class {
+        constructor(title, date) {
+          this._title = title;
+          this._date = date;
+          this._isComplete = false;
+          this._list = [];
+        }
+
+        isComplete() { return this._isComplete };
+        toggle() {
+          this._isComplete = !this._isComplete;
+        };
+        add(title, date = null) { this._list.push(new Task(title, date)); }
+        remove(task) {
+          const list = this._list;
+          if (list.includes(task)) list.splice(list.indexOf(task), 1);
+        }
+        byTitle(stateGroup = true) { return this.list('title', stateGroup); }
+        byDate(stateGroup = true) { return this.list('date', stateGroup); }
+        list(sort, stateGroup = true) {
+          const list = this._list;
+          const f = (a, b) => a['_' + sort] > b['_' + sort];
+          const map = task => task.list(sort, stateGroup);
+          return {
+            task: this,
+            list: !stateGroup ? [...list].sort(f).map(map) : [
+              ...list.filter(v => !v.isComplete()).sort(f).map(map),
+              ...list.filter(v => v.isComplete()).sort(f).map(map)
+            ]
+          };
+        }
+      };
+    })()
+    const DomRenderer = (_ => {
+      const Private = Symbol();
+      const el = (tag, attr = {}) => Object.entries(attr).reduce((accum, v) => {
+        typeof accum[v[0]] === 'function' ? accum[v[0]](v[1]) : (accum[v[0]] = v[1]);
+        return accum;
+      }, document.createElement(tag));
+      return class {
+        constructor(parent) {
+          this[Private] = { parent };
+        }
+        render(date) {
+          const { task, list } = date;
+          const parent = document.querySelector(this[Private].parent);
+          parent.appendChild(el('h1', { innerHTML: task._title }));
+          list.length > 0 && parent.appendChild(this._render(el('ul'), list));
+        }
+
+        _render(parent, list) {
+          list.forEach(({ task, list }) => {
+            const li = parent.appendChild(el('li'));
+            li.appendChild(el('div', { innerHTML: task._title }));
+            list.length > 0 && li.appendChild(this._render(el('ul'), list));
+          });
+          return parent;
+        };
+      }
+    })();
+
+    const folder = new Task('s3-4');
+    folder.add("2강교안작성");
+    folder.add("3강교안작성");
+    const { list } = folder.byTitle();
+    list[1].task.add('ppt정리');
+    list[1].task.add('코드정리');
+    const { list: sublist } = list[1].task.byTitle();
+    sublist[1].task.add('슬라이드마스터정리');
+    sublist[1].task.add('디자인개선');
+
+    const todo = new DomRenderer('#root');
+    todo.render(folder.byTitle());
+  </script>
+</body>
+
+</html>
