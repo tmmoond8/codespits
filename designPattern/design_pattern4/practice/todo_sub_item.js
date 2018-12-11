@@ -9,6 +9,9 @@ const Task = class {
 	toggle() {
 		this._isComplete = !this._isComplete;
 	}
+	toggleList() {
+		this._list.forEach(item => this.isComplete() !== item.isComplete() && item.toggle());
+	}
 	add(title, date = null) {
 		this._list.push(new Task(title, date));
 	}

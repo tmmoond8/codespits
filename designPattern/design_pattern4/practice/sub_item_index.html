@@ -4,6 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta title="sub item task">
+  <style>
+    ul {
+      list-style: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -15,22 +20,22 @@
   <script src="DomVisitor.js"></script>
   <script>
     const folder = new Task('s3-4');
-    folder.add("3강교안작성");
     folder.add("2강교안작성");
-    const { list } = folder.list('title');
-    list[0].task.add('ppt정리');
-    list[0].task.add('a코드정리');
-    const { list: sublist } = list[0].task.list('title');
-    sublist[0].task.add('슬라이드마스터정리');
-    sublist[0].task.add('디자인개선');
+    folder.add("3강교안작성");
+    folder.add("1강교안작성");
+    const { list } = folder.getData();
+    list[0].add('ppt정리');
+    list[0].add('a코드정리');
+    const { list: sublist } = list[0].getData();
+    sublist[1].add('슬라이드마스터정리');
+    sublist[1].add('디자인개선');
 
+    const { list: innerList } = sublist[1].getData();
+    innerList[1].add('bbaa');
+    innerList[1].add('aaa');
 
-    const { _list: innerList } = sublist[0].task;
-    innerList[0].add('bbaa');
-    innerList[0].add('aaa');
-
-    // const consoler = new Renderer(new ConsoleVisitor());
-    // consoler.render(folder.list('title'));
+    const consoler = new Renderer(new ConsoleVisitor());
+    consoler.render(folder.getData());
 
     const todo = new Renderer(new DomVisitor('#root'));
     todo.render(folder.getData());

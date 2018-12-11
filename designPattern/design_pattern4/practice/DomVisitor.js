@@ -8,7 +8,8 @@ const DomVisitor = class extends Visitor {
     super();
     this._root = root;
   }
-  folder(task) {
+  folder(task, subTaskTrigger) {
+    this._subTaskTrigger  = subTaskTrigger;
     const parent = document.querySelector(this._root);
     parent.appendChild(el('h1', { innerHTML: task._title }));
     return parent;
@@ -21,7 +22,21 @@ const DomVisitor = class extends Visitor {
 
   task(parent, task) {
     const li = parent.appendChild(el('li'));
-    li.appendChild(el('div', { innerHTML: task._title}));
+    const label = el('label');
+    li.appendChild(label);
+    const checkbox = el('input', { type: 'checkbox', checked: task.isComplete()});
+    checkbox.addEventListener('click', e => {
+      this._checkHandler(task, e);
+    });
+    label.append(checkbox, task._title);
     return li;
+  }
+
+  _checkHandler(task, e) {
+    task.toggle();
+    task.toggleList();
+    const subtask = e.target.parentNode.nextSibling;
+    subtask.innerHTML = '';
+    this._subTaskTrigger(subtask, task._list);
   }
 }
