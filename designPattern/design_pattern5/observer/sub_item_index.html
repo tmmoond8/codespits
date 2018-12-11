@@ -8,7 +8,7 @@
 
 <body>
   <div id="root" />
-  <script src="todo_sub_item.js"></script>
+  <script src="Task.js"></script>
   <script src="TaskView.js"></script>
   <script src="Renderer.js"></script>
   <script src="DomProcessor.js"></script>
@@ -28,7 +28,7 @@
     innerList[0].add('aaa');
     const dom = new DomProcessor('#root');
     const todo = new Renderer(dom);
-    dom.taskView(new Remove(_ => todo.render(folder.list())));
+    dom.taskView(new Remove());
     todo.render(folder.list());
   </script>
 </body>

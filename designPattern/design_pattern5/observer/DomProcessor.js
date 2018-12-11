@@ -3,7 +3,7 @@ const el = (tag, attr = {}) => Object.entries(attr).reduce((accum, v) => {
   return accum;
 }, document.createElement(tag));
 
-const DomProcessor = class extends Processor {
+const DomProcessor = class extends Renderer.Processor {
   constructor(parent) {
     super(parent);
     this._parent = parent;
