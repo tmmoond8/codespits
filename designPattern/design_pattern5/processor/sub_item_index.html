@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta title="sub item task">
+</head>
+
+<body>
+  <div id="root" />
+  <script src="todo_sub_item.js"></script>
+  <script src="Renderer.js"></script>
+  <script src="ConsoleProcessor.js"></script>
+  <script src="DomProcessor.js"></script>
+  <script>
+    const folder = new Task('s3-4');
+    folder.add("3강교안작성");
+    folder.add("2강교안작성");
+    const { list } = folder.list('title');
+    list[0].task.add('ppt정리');
+    list[0].task.add('a코드정리');
+    const { list: sublist } = list[0].task.list('title');
+    sublist[0].task.add('슬라이드마스터정리');
+    sublist[0].task.add('디자인개선');
+
+    const { _list: innerList } = sublist[0].task;
+    innerList[0].add('bbaa');
+    innerList[0].add('aaa');
+
+    const consoler = new Renderer(new ConsoleProcessor());
+    consoler.render(folder.list());
+
+    const todo = new Renderer(new DomProcessor('#root'));
+    todo.render(folder.list());
+  </script>
+</body>
+
+</html>
